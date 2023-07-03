@@ -1,5 +1,7 @@
 $tw_choo $mol_page
 	title \Калькулятор Choo Choo Survivor
 	foot /
-		<= GitHub $mol_link 
-			uri \https://github.com/Lyumih/tw/choo
+		<= GitHub $mol_link
+			uri \https://github.com/Lyumih/tw/tree/main/choo
+		<= Game $mol_link
+			uri \https://store.steampowered.com/app/2336200/Choo_Choo_Survivor/
