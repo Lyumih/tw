@@ -1,0 +1,25 @@
+$tw_choo $mol_page
+	title \Калькулятор Choo Choo Survivor
+	body /
+		<= Damage_info $mol_labeler
+			title \Урон
+			content /
+				<= Damage $mol_number
+					value? <=> damage? 5
+					precision_change 5
+		<= Speed_info $mol_labeler
+			title \Скорострельность
+			content /
+				<= Speed $mol_number
+					value? <=> speed? 1
+					precision_change 0.33
+					precision 0.01
+		<= DPS $mol_section
+			title \Итог:
+			content /
+				<= Result $mol_text text <= result \5 урона в секунду
+	foot /
+		<= GitHub $mol_link
+			uri \https://github.com/Lyumih/tw/tree/main/choo
+		<= Game $mol_link
+			uri \https://store.steampowered.com/app/2336200/Choo_Choo_Survivor/
