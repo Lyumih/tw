@@ -15,14 +15,26 @@ $tw_choo $mol_page
 					precision_change 0.33
 					precision 0.01
 		<= Penetration_info $mol_labeler
-			title \Пробитие
+			title \Пробивание
 			content /
 				<= Penetration $mol_number
 					value? <=> penetration? 1
-		<= DPS $mol_section
-			title \Итог:
+		<= Crit_change_info $mol_labeler
+			title \Крит Шанс %
 			content /
-				<= Result $mol_text text <= result \5 урона в секунду
+				<= Crit_chance $mol_number
+					value? <=> crit_chance? 10
+		<= Crit_damage_info $mol_labeler
+			title \Крит Урон %
+			content /
+				<= Crit_damage $mol_number
+					value? <=> crit_damage? 50
+		<= DPS $mol_text text <= result \
+		<= Conclusion $mol_text
+			text <= conclusion \
+				\# Выводы
+				\В игре Choo Choo Survivor выгодно сначала **полностью прокачать Урон** и потом прокачивать Пробивание вместе с скорострельностью
+				\Малое значение криш шанса *не даёт значительного увелечения урона* - поэтому лучше всего держашть криш шанс > 50%
 	foot /
 		<= GitHub $mol_link
 			uri \https://github.com/Lyumih/tw/tree/main/choo
