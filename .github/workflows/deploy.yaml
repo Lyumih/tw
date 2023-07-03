@@ -1,0 +1,55 @@
+name: Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: 
+    - main
+  pull_request:
+  schedule:
+  - cron: "0 7 * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    
+    - name: Environment Printer
+      uses: managedkaos/print-env@v1.0
+    
+    - name: Build apps
+      uses: hyoo-ru/mam_build@master2
+      with:
+        token: ${{ secrets.GH_PAT }}
+        package: tw
+        modules: choo
+        
+    - name: Consolidate apps
+      run: |
+        rm -rf tw/.git
+        rm -rf tw/.github
+        rm -rf tw/.gitignore
+        rm -rf tw/icon
+        
+    - name: Deploy on GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
+      with:
+        repo-token: ${{ secrets.GH_PAT }}
+        site-directory: tw
+  
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - env:
+        GITHUB_TOKEN: ${{ secrets.GH_PAT }}
+        INPUTS_CLIENT_PAYLOAD: '{"repository":${{ toJson(github.event.repository.name) }}}'
+        INPUTS_EVENT_TYPE: dependency_changed
+        INPUTS_REPOSITORY: ${{ matrix.repo }}
+      uses: rekgrpth/github-repository-dispatch-shell-action@v1
+    strategy:
+      matrix:
+        repo:
+          - lyumih/tw

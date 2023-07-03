@@ -1,0 +1,5 @@
+$tw_choo $mol_page
+	title \Калькулятор Choo Choo Survivor
+	foot /
+		<= GitHub $mol_link 
+			uri \https://github.com/Lyumih/tw/choo
