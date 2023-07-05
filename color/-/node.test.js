@@ -8554,11 +8554,8 @@ var $;
                 return next;
             return true;
         }
-        bg_from() {
-            return "green";
-        }
-        bg_target() {
-            return "orange";
+        speed() {
+            return 2.4;
         }
         event() {
             return {
@@ -8583,28 +8580,41 @@ var $;
                 return next;
             return null;
         }
+        bg_from() {
+            return 120;
+        }
         From_box() {
             const obj = new this.$.$tw_color_box();
-            obj.bg_all = () => this.bg_from();
+            obj.bg_all_h = () => this.bg_from();
             obj.game = () => this.mode();
-            obj.common = () => "from";
+            obj.common = () => "from +";
             obj.center = () => "82% -";
             return obj;
         }
+        bg_mix() {
+            return 50;
+        }
+        result() {
+            return "";
+        }
         Mix_box() {
             const obj = new this.$.$tw_color_box();
+            obj.bg_all_h = () => this.bg_mix();
             obj.game = () => this.mode();
-            obj.common = () => "mix\nspeed: 0.5\nmax: 2.4";
+            obj.common = () => this.result();
             obj.top = () => "need";
             obj.bottom = () => "your";
             return obj;
         }
+        bg_target() {
+            return 240;
+        }
         Target_box() {
             const obj = new this.$.$tw_color_box();
-            obj.bg_all = () => this.bg_target();
+            obj.bg_all_h = () => this.bg_target();
             obj.game = () => this.mode();
-            obj.common = () => "target";
-            obj.top = () => "target";
+            obj.common = () => "=target";
+            obj.top = () => "= target";
             obj.bottom = () => "your";
             return obj;
         }
@@ -8645,6 +8655,9 @@ var $;
         game() {
             return false;
         }
+        bg_all_h() {
+            return 0;
+        }
         style() {
             return {
                 ...super.style(),
@@ -8660,7 +8673,7 @@ var $;
             ];
         }
         bg_all() {
-            return "";
+            return "green";
         }
         common() {
             return "";
@@ -8714,7 +8727,7 @@ var $;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("tw/color/color.view.css", "[tw_color_body] {\n\tflex-direction: row;\n\tgap: var(--mol_gap_block);\n}\n\n[tw_color_box] {\n\tposition: relative;\n\tbackground-color: red;\n\twidth: 200px;\n\theight: 200px;\n\tborder-radius: var(--mol_gap_block);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n[tw_color_box_common] {\n\tposition: absolute;\n\twidth: 100%;\n\tjustify-content: center;\n\talign-items: center;\n\ttext-align: center;\n}\n\n[tw_color_box_center] {\n\tposition: absolute;\n\twidth: 100%;\n\tjustify-content: center;\n\talign-items: center;\n\tbackground-color: gray;\n}\n\n[tw_color_box_top] {\n\tposition: absolute;\n\twidth: 100%;\n\theight: 50%;\n\ttop: 0;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n[tw_color_box_bottom] {\n\tposition: absolute;\n\twidth: 100%;\n\theight: 50%;\n\ttop: 50%;\n\tjustify-content: center;\n\talign-items: center;\n}\n");
+    $mol_style_attach("tw/color/color.view.css", "[tw_color_body] {\n\tflex-direction: row;\n\tflex-wrap: wrap;\n\tjustify-content: center;\n\tgap: var(--mol_gap_block);\n}\n\n[tw_color_box] {\n\tposition: relative;\n\tbackground-color: red;\n\twidth: 150px;\n\theight: 150px;\n\tborder-radius: var(--mol_gap_block);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n[tw_color_box_common] {\n\tposition: absolute;\n\twidth: 100%;\n\tjustify-content: center;\n\talign-items: center;\n\ttext-align: center;\n}\n\n[tw_color_box_center] {\n\tposition: absolute;\n\twidth: 100%;\n\tjustify-content: center;\n\talign-items: center;\n\tbackground-color: gray;\n}\n\n[tw_color_box_top] {\n\tposition: absolute;\n\twidth: 100%;\n\theight: 50%;\n\ttop: 0;\n\tjustify-content: center;\n\talign-items: center;\n}\n\n[tw_color_box_bottom] {\n\tposition: absolute;\n\twidth: 100%;\n\theight: 50%;\n\ttop: 50%;\n\tjustify-content: center;\n\talign-items: center;\n}\n");
 })($ || ($ = {}));
 //tw/color/-css/color.view.css.ts
 ;
@@ -8725,26 +8738,65 @@ var $;
     (function ($$) {
         class $tw_color extends $.$tw_color {
             toggle(next) {
+                if (!this.mode()) {
+                    this.bg_from(this.generate_random_h());
+                    this.bg_target(this.generate_random_h());
+                    this.h_mix(this.generate_random_h());
+                }
+                else {
+                    console.log(this.bg_from(), this.bg_target(), this.h_mix());
+                    console.log(this.delta());
+                }
                 this.mode(!this.mode());
             }
-            bg_from() {
-                return this.generate_color();
+            delta() {
+                const delta_target = this.bg_from() - this.bg_target();
+                const delta_mix = this.bg_from() - this.h_mix();
+                const delta_result = Math.abs(delta_target - delta_mix);
+                const delta_coeff = Math.abs(delta_target / delta_mix);
+                console.log({ delta_target, delta_mix, delta_result, delta_coeff, bg_from: this.bg_from(), bg_target: this.bg_target(), h_mix: this.h_mix() });
+                return Math.floor(delta_coeff) * 100;
             }
-            bg_target() {
-                return this.generate_color();
+            bg_from(next) {
+                console.log('test');
+                return next ?? this.generate_random_h();
             }
-            generate_color() {
-                const randomColor = Math.floor(Math.random() * 16777215);
-                const hexColor = randomColor.toString(16);
-                const paddedHexColor = hexColor.padStart(6, '0');
-                return `#${paddedHexColor}`;
+            bg_target(next) {
+                return next ?? this.generate_random_h();
+            }
+            bg_mix() {
+                this.mode() && $mol_state_time.now(200);
+                console.log(this.h_mix());
+                this.h_mix() + 3 > 359 ? this.h_mix(0) : this.h_mix(this.h_mix() + 5);
+                return this.h_mix();
+            }
+            h_mix(next) {
+                return next ?? this.generate_random_h();
+            }
+            result() {
+                return `mix\nspeed: ${this.speed()}\nmax: 2.4`;
+            }
+            generate_random_h() {
+                return Math.floor(Math.random() * 360);
             }
         }
         __decorate([
             $mol_action
         ], $tw_color.prototype, "toggle", null);
+        __decorate([
+            $mol_mem
+        ], $tw_color.prototype, "bg_from", null);
+        __decorate([
+            $mol_mem
+        ], $tw_color.prototype, "bg_target", null);
+        __decorate([
+            $mol_mem
+        ], $tw_color.prototype, "h_mix", null);
         $$.$tw_color = $tw_color;
         class $tw_color_box extends $.$tw_color_box {
+            bg_all() {
+                return `hsl(${this.bg_all_h()}, 100%, 80%)`;
+            }
             sub() {
                 return this.game() ? [this.Common()] :
                     [this.center() && this.Center(), this.top() && this.Top(), this.bottom() && this.Bottom()];

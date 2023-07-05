@@ -23,20 +23,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bg_from \green
+		 * speed 2.4
 		 * ```
 		 */
-		bg_from() {
-			return "green"
-		}
-		
-		/**
-		 * ```tree
-		 * bg_target \orange
-		 * ```
-		 */
-		bg_target() {
-			return "orange"
+		speed() {
+			return 2.4
 		}
 		
 		/**
@@ -93,10 +84,19 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bg_from 120
+		 * ```
+		 */
+		bg_from() {
+			return 120
+		}
+		
+		/**
+		 * ```tree
 		 * From_box $tw_color_box
-		 * 	bg_all <= bg_from
+		 * 	bg_all_h <= bg_from
 		 * 	game <= mode
-		 * 	common \from
+		 * 	common \from +
 		 * 	center \82% -
 		 * ```
 		 */
@@ -104,9 +104,9 @@ namespace $ {
 		From_box() {
 			const obj = new this.$.$tw_color_box()
 			
-			obj.bg_all = () => this.bg_from()
+			obj.bg_all_h = () => this.bg_from()
 			obj.game = () => this.mode()
-			obj.common = () => "from"
+			obj.common = () => "from +"
 			obj.center = () => "82% -"
 			
 			return obj
@@ -114,12 +114,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bg_mix 50
+		 * ```
+		 */
+		bg_mix() {
+			return 50
+		}
+		
+		/**
+		 * ```tree
+		 * result \
+		 * ```
+		 */
+		result() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Mix_box $tw_color_box
+		 * 	bg_all_h <= bg_mix
 		 * 	game <= mode
-		 * 	common \
-		 * 		\mix
-		 * 		\speed: 0.5
-		 * 		\max: 2.4
+		 * 	common <= result
 		 * 	top \need
 		 * 	bottom \your
 		 * ```
@@ -128,8 +144,9 @@ namespace $ {
 		Mix_box() {
 			const obj = new this.$.$tw_color_box()
 			
+			obj.bg_all_h = () => this.bg_mix()
 			obj.game = () => this.mode()
-			obj.common = () => "mix\nspeed: 0.5\nmax: 2.4"
+			obj.common = () => this.result()
 			obj.top = () => "need"
 			obj.bottom = () => "your"
 			
@@ -138,11 +155,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bg_target 240
+		 * ```
+		 */
+		bg_target() {
+			return 240
+		}
+		
+		/**
+		 * ```tree
 		 * Target_box $tw_color_box
-		 * 	bg_all <= bg_target
+		 * 	bg_all_h <= bg_target
 		 * 	game <= mode
-		 * 	common \target
-		 * 	top \target
+		 * 	common \=target
+		 * 	top \= target
 		 * 	bottom \your
 		 * ```
 		 */
@@ -150,10 +176,10 @@ namespace $ {
 		Target_box() {
 			const obj = new this.$.$tw_color_box()
 			
-			obj.bg_all = () => this.bg_target()
+			obj.bg_all_h = () => this.bg_target()
 			obj.game = () => this.mode()
-			obj.common = () => "target"
-			obj.top = () => "target"
+			obj.common = () => "=target"
+			obj.top = () => "= target"
 			obj.bottom = () => "your"
 			
 			return obj
@@ -201,6 +227,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bg_all_h 0
+		 * ```
+		 */
+		bg_all_h() {
+			return 0
+		}
+		
+		/**
+		 * ```tree
 		 * style *
 		 * 	^
 		 * 	background <= bg_all
@@ -233,11 +268,11 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * bg_all \
+		 * bg_all \green
 		 * ```
 		 */
 		bg_all() {
-			return ""
+			return "green"
 		}
 		
 		/**

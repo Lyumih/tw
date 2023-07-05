@@ -2495,20 +2495,24 @@ declare namespace $ {
     class $tw_color extends $mol_page {
         title(): string;
         mode(next?: any): boolean;
-        bg_from(): string;
-        bg_target(): string;
+        speed(): number;
         event(): Record<string, any>;
         body(): readonly any[];
         foot(): readonly any[];
         toggle(next?: any): any;
+        bg_from(): number;
         From_box(): $$.$tw_color_box;
+        bg_mix(): number;
+        result(): string;
         Mix_box(): $$.$tw_color_box;
+        bg_target(): number;
         Target_box(): $$.$tw_color_box;
         GitHub(): $$.$mol_link;
         Game(): $$.$mol_link;
     }
     class $tw_color_box extends $mol_view {
         game(): boolean;
+        bg_all_h(): number;
         style(): Record<string, any>;
         sub(): readonly any[];
         bg_all(): string;
@@ -2529,11 +2533,16 @@ declare namespace $ {
 declare namespace $.$$ {
     class $tw_color extends $.$tw_color {
         toggle(next?: any): void;
-        bg_from(): string;
-        bg_target(): string;
-        generate_color(): string;
+        delta(): number;
+        bg_from(next?: number): number;
+        bg_target(next?: number): number;
+        bg_mix(): number;
+        h_mix(next?: number): number;
+        result(): string;
+        generate_random_h(): number;
     }
     class $tw_color_box extends $.$tw_color_box {
+        bg_all(): string;
         sub(): readonly any[];
     }
 }
