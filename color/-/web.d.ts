@@ -1168,30 +1168,42 @@ declare namespace $ {
 
 declare namespace $ {
     class $tw_color extends $mol_page {
-        mod(): string;
         title(): string;
+        mode(next?: any): boolean;
+        event(): Record<string, any>;
         body(): readonly any[];
         foot(): readonly any[];
-        From_box(): $tw_box;
-        Mix_box(): $tw_box;
-        Target_box(): $tw_box;
+        toggle(next?: any): any;
+        From_box(): $$.$tw_color_box;
+        Mix_box(): $$.$tw_color_box;
+        Target_box(): $$.$tw_color_box;
         GitHub(): $$.$mol_link;
         Game(): $$.$mol_link;
     }
-    class $tw_box extends $mol_view {
-        common(): string;
-        center(): string;
-        top(): string;
-        bottom(): string;
+    class $tw_color_box extends $mol_view {
+        game(): boolean;
         sub(): readonly any[];
+        common(): string;
         Common(): $mol_button_major;
+        center(): string;
         Center(): $mol_button_major;
+        top(): string;
         Top(): $mol_button_major;
+        bottom(): string;
         Bottom(): $mol_button_major;
     }
 }
 
 declare namespace $ {
+}
+
+declare namespace $.$$ {
+    class $tw_color extends $.$tw_color {
+        toggle(next?: any): void;
+    }
+    class $tw_color_box extends $.$tw_color_box {
+        sub(): readonly any[];
+    }
 }
 
 export = $;

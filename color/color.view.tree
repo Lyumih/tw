@@ -1,17 +1,22 @@
 $tw_color $mol_page
-	mod \game|result
 	title \Игра в цвета от @artalar
+	mode? false
+	event *
+		click? <=> toggle? null
 	body /
-		<= From_box $tw_box
+		<= From_box $tw_color_box
+			game <= mode
 			common \from
 			center \82% -
-		<= Mix_box $tw_box
+		<= Mix_box $tw_color_box
+			game <= mode
 			common \mix speed: 0.5 max: 2.4
 			top \need
 			bottom \your
-		<= Target_box $tw_box
+		<= Target_box $tw_color_box
+			game <= mode
 			common \target
-			top \need
+			top \target
 			bottom \your
 	foot /
 		<= GitHub $mol_link
@@ -19,17 +24,14 @@ $tw_color $mol_page
 		<= Game $mol_link
 			uri \https://github.com/artalar/color-game-reatom
 
-$tw_box $mol_view
-	common \
-	center \
-	top \
-	bottom \
+$tw_color_box $mol_view
+	game false
 	sub /
 		<= Common $mol_button_major
-			title <= common
+			title <= common \
 		<= Center $mol_button_major
-			title <= center
+			title <= center \
 		<= Top $mol_button_major
-			title <= top
+			title <= top \
 		<= Bottom $mol_button_major
-			title <= bottom
+			title <= bottom \

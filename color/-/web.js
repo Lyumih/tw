@@ -3675,11 +3675,18 @@ var $;
 var $;
 (function ($) {
     class $tw_color extends $mol_page {
-        mod() {
-            return "game|result";
-        }
         title() {
             return "Игра в цвета от @artalar";
+        }
+        mode(next) {
+            if (next !== undefined)
+                return next;
+            return false;
+        }
+        event() {
+            return {
+                click: (next) => this.toggle(next)
+            };
         }
         body() {
             return [
@@ -3694,23 +3701,31 @@ var $;
                 this.Game()
             ];
         }
+        toggle(next) {
+            if (next !== undefined)
+                return next;
+            return null;
+        }
         From_box() {
-            const obj = new this.$.$tw_box();
+            const obj = new this.$.$tw_color_box();
+            obj.game = () => this.mode();
             obj.common = () => "from";
             obj.center = () => "82% -";
             return obj;
         }
         Mix_box() {
-            const obj = new this.$.$tw_box();
+            const obj = new this.$.$tw_color_box();
+            obj.game = () => this.mode();
             obj.common = () => "mix speed: 0.5 max: 2.4";
             obj.top = () => "need";
             obj.bottom = () => "your";
             return obj;
         }
         Target_box() {
-            const obj = new this.$.$tw_box();
+            const obj = new this.$.$tw_color_box();
+            obj.game = () => this.mode();
             obj.common = () => "target";
-            obj.top = () => "need";
+            obj.top = () => "target";
             obj.bottom = () => "your";
             return obj;
         }
@@ -3727,6 +3742,12 @@ var $;
     }
     __decorate([
         $mol_mem
+    ], $tw_color.prototype, "mode", null);
+    __decorate([
+        $mol_mem
+    ], $tw_color.prototype, "toggle", null);
+    __decorate([
+        $mol_mem
     ], $tw_color.prototype, "From_box", null);
     __decorate([
         $mol_mem
@@ -3741,18 +3762,9 @@ var $;
         $mol_mem
     ], $tw_color.prototype, "Game", null);
     $.$tw_color = $tw_color;
-    class $tw_box extends $mol_view {
-        common() {
-            return "";
-        }
-        center() {
-            return "";
-        }
-        top() {
-            return "";
-        }
-        bottom() {
-            return "";
+    class $tw_color_box extends $mol_view {
+        game() {
+            return false;
         }
         sub() {
             return [
@@ -3762,20 +3774,32 @@ var $;
                 this.Bottom()
             ];
         }
+        common() {
+            return "";
+        }
         Common() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => this.common();
             return obj;
+        }
+        center() {
+            return "";
         }
         Center() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => this.center();
             return obj;
         }
+        top() {
+            return "";
+        }
         Top() {
             const obj = new this.$.$mol_button_major();
             obj.title = () => this.top();
             return obj;
+        }
+        bottom() {
+            return "";
         }
         Bottom() {
             const obj = new this.$.$mol_button_major();
@@ -3785,25 +3809,47 @@ var $;
     }
     __decorate([
         $mol_mem
-    ], $tw_box.prototype, "Common", null);
+    ], $tw_color_box.prototype, "Common", null);
     __decorate([
         $mol_mem
-    ], $tw_box.prototype, "Center", null);
+    ], $tw_color_box.prototype, "Center", null);
     __decorate([
         $mol_mem
-    ], $tw_box.prototype, "Top", null);
+    ], $tw_color_box.prototype, "Top", null);
     __decorate([
         $mol_mem
-    ], $tw_box.prototype, "Bottom", null);
-    $.$tw_box = $tw_box;
+    ], $tw_color_box.prototype, "Bottom", null);
+    $.$tw_color_box = $tw_color_box;
 })($ || ($ = {}));
 //tw/color/-view.tree/color.view.tree.ts
 ;
 "use strict";
 var $;
 (function ($) {
-    $mol_style_attach("tw/color/color.view.css", "[tw_color_body] {\n\tflex-direction: row;\n\tgap: var(--mol_gap_block);\n}\n\n[tw_box] {\n\tbackground-color: red;\n\twidth: 200px;\n\theight: 200px;\n\tborder-radius: var(--mol_gap_block);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n");
+    $mol_style_attach("tw/color/color.view.css", "[tw_color_body] {\n\tflex-direction: row;\n\tgap: var(--mol_gap_block);\n}\n\n[tw_color_box] {\n\tbackground-color: red;\n\twidth: 200px;\n\theight: 200px;\n\tborder-radius: var(--mol_gap_block);\n\tdisplay: flex;\n\tflex-direction: column;\n\tjustify-content: center;\n\talign-items: center;\n}\n");
 })($ || ($ = {}));
 //tw/color/-css/color.view.css.ts
+;
+"use strict";
+var $;
+(function ($) {
+    var $$;
+    (function ($$) {
+        class $tw_color extends $.$tw_color {
+            toggle(next) {
+                this.mode(!this.mode());
+            }
+        }
+        $$.$tw_color = $tw_color;
+        class $tw_color_box extends $.$tw_color_box {
+            sub() {
+                return this.game() ? [this.Common()] :
+                    [this.center() && this.Center(), this.top() && this.Top(), this.bottom() && this.Bottom()];
+            }
+        }
+        $$.$tw_color_box = $tw_color_box;
+    })($$ = $.$$ || ($.$$ = {}));
+})($ || ($ = {}));
+//tw/color/color.view.tree.ts
 
 //# sourceMappingURL=web.js.map

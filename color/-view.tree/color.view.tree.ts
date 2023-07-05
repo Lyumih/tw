@@ -3,20 +3,33 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * mod \game|result
-		 * ```
-		 */
-		mod() {
-			return "game|result"
-		}
-		
-		/**
-		 * ```tree
 		 * title \Игра в цвета от @artalar
 		 * ```
 		 */
 		title() {
 			return "Игра в цвета от @artalar"
+		}
+		
+		/**
+		 * ```tree
+		 * mode? false
+		 * ```
+		 */
+		@ $mol_mem
+		mode(next?: any) {
+			if ( next !== undefined ) return next as never
+			return false
+		}
+		
+		/**
+		 * ```tree
+		 * event * click? <=> toggle?
+		 * ```
+		 */
+		event() {
+			return {
+				click: (next?: any) => this.toggle(next)
+			} as Record< string, any >
 		}
 		
 		/**
@@ -51,15 +64,28 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * From_box $tw_box
+		 * toggle? null
+		 * ```
+		 */
+		@ $mol_mem
+		toggle(next?: any) {
+			if ( next !== undefined ) return next as never
+			return null as any
+		}
+		
+		/**
+		 * ```tree
+		 * From_box $tw_color_box
+		 * 	game <= mode
 		 * 	common \from
 		 * 	center \82% -
 		 * ```
 		 */
 		@ $mol_mem
 		From_box() {
-			const obj = new this.$.$tw_box()
+			const obj = new this.$.$tw_color_box()
 			
+			obj.game = () => this.mode()
 			obj.common = () => "from"
 			obj.center = () => "82% -"
 			
@@ -68,7 +94,8 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Mix_box $tw_box
+		 * Mix_box $tw_color_box
+		 * 	game <= mode
 		 * 	common \mix speed: 0.5 max: 2.4
 		 * 	top \need
 		 * 	bottom \your
@@ -76,8 +103,9 @@ namespace $ {
 		 */
 		@ $mol_mem
 		Mix_box() {
-			const obj = new this.$.$tw_box()
+			const obj = new this.$.$tw_color_box()
 			
+			obj.game = () => this.mode()
 			obj.common = () => "mix speed: 0.5 max: 2.4"
 			obj.top = () => "need"
 			obj.bottom = () => "your"
@@ -87,18 +115,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Target_box $tw_box
+		 * Target_box $tw_color_box
+		 * 	game <= mode
 		 * 	common \target
-		 * 	top \need
+		 * 	top \target
 		 * 	bottom \your
 		 * ```
 		 */
 		@ $mol_mem
 		Target_box() {
-			const obj = new this.$.$tw_box()
+			const obj = new this.$.$tw_color_box()
 			
+			obj.game = () => this.mode()
 			obj.common = () => "target"
-			obj.top = () => "need"
+			obj.top = () => "target"
 			obj.bottom = () => "your"
 			
 			return obj
@@ -133,42 +163,15 @@ namespace $ {
 		}
 	}
 	
-	export class $tw_box extends $mol_view {
+	export class $tw_color_box extends $mol_view {
 		
 		/**
 		 * ```tree
-		 * common \
+		 * game false
 		 * ```
 		 */
-		common() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * center \
-		 * ```
-		 */
-		center() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * top \
-		 * ```
-		 */
-		top() {
-			return ""
-		}
-		
-		/**
-		 * ```tree
-		 * bottom \
-		 * ```
-		 */
-		bottom() {
-			return ""
+		game() {
+			return false
 		}
 		
 		/**
@@ -191,6 +194,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * common \
+		 * ```
+		 */
+		common() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Common $mol_button_major title <= common
 		 * ```
 		 */
@@ -201,6 +213,15 @@ namespace $ {
 			obj.title = () => this.common()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * center \
+		 * ```
+		 */
+		center() {
+			return ""
 		}
 		
 		/**
@@ -219,6 +240,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * top \
+		 * ```
+		 */
+		top() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * Top $mol_button_major title <= top
 		 * ```
 		 */
@@ -229,6 +259,15 @@ namespace $ {
 			obj.title = () => this.top()
 			
 			return obj
+		}
+		
+		/**
+		 * ```tree
+		 * bottom \
+		 * ```
+		 */
+		bottom() {
+			return ""
 		}
 		
 		/**
