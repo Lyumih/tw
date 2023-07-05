@@ -1,1 +1,15 @@
 $tw_color $mol_page
+	title \Игра в цвета от @artalar
+	body /
+		<= From $tw_box
+		<= Mix $tw_box
+		<= Target $tw_box
+	foot /
+		<= GitHub $mol_link
+			uri \https://github.com/Lyumih/tw/tree/main/color
+		<= Game $mol_link
+			uri \https://github.com/artalar/color-game-reatom
+
+$tw_box $mol_view
+	sub /
+		\from
