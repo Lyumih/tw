@@ -1,13 +1,15 @@
 [tw_color_body] {
 	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
 	gap: var(--mol_gap_block);
 }
 
 [tw_color_box] {
 	position: relative;
 	background-color: red;
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	border-radius: var(--mol_gap_block);
 	display: flex;
 	flex-direction: column;

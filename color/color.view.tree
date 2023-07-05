@@ -1,29 +1,26 @@
 $tw_color $mol_page
 	title \Игра в цвета от @artalar
 	mode? true
-	bg_from \green
-	bg_target \orange
+	speed 2.4
 	event *
 		click? <=> toggle? null
 	body /
 		<= From_box $tw_color_box
-			bg_all <= bg_from
+			bg_all_h <= bg_from 120
 			game <= mode
-			common \from
+			common \from +
 			center \82% -
 		<= Mix_box $tw_color_box
+			bg_all_h <= bg_mix 50
 			game <= mode
-			common \
-				\mix
-				\speed: 0.5
-				\max: 2.4
+			common <= result \
 			top \need
 			bottom \your
 		<= Target_box $tw_color_box
-			bg_all <= bg_target
+			bg_all_h <= bg_target 240
 			game <= mode
-			common \target
-			top \target
+			common \=target
+			top \= target
 			bottom \your
 	foot /
 		<= GitHub $mol_link
@@ -33,9 +30,10 @@ $tw_color $mol_page
 
 $tw_color_box $mol_view
 	game false
+	bg_all_h 0
 	style *
 		^
-		background <= bg_all \
+		background <= bg_all \green
 	sub /
 		<= Common $mol_text
 			text <= common \
