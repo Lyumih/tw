@@ -1,9 +1,18 @@
 $tw_color $mol_page
+	mod \game|result
 	title \Игра в цвета от @artalar
 	body /
-		<= From $tw_box
-		<= Mix $tw_box
-		<= Target $tw_box
+		<= From_box $tw_box
+			common \from
+			center \82% -
+		<= Mix_box $tw_box
+			common \mix speed: 0.5 max: 2.4
+			top \need
+			bottom \your
+		<= Target_box $tw_box
+			common \target
+			top \need
+			bottom \your
 	foot /
 		<= GitHub $mol_link
 			uri \https://github.com/Lyumih/tw/tree/main/color
@@ -11,5 +20,16 @@ $tw_color $mol_page
 			uri \https://github.com/artalar/color-game-reatom
 
 $tw_box $mol_view
+	common \
+	center \
+	top \
+	bottom \
 	sub /
-		\from
+		<= Common $mol_button_major
+			title <= common
+		<= Center $mol_button_major
+			title <= center
+		<= Top $mol_button_major
+			title <= top
+		<= Bottom $mol_button_major
+			title <= bottom
