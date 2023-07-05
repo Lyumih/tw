@@ -1,19 +1,26 @@
 $tw_color $mol_page
 	title \Игра в цвета от @artalar
-	mode? false
+	mode? true
+	bg_from \green
+	bg_target \orange
 	event *
 		click? <=> toggle? null
 	body /
 		<= From_box $tw_color_box
+			bg_all <= bg_from
 			game <= mode
 			common \from
 			center \82% -
 		<= Mix_box $tw_color_box
 			game <= mode
-			common \mix speed: 0.5 max: 2.4
+			common \
+				\mix
+				\speed: 0.5
+				\max: 2.4
 			top \need
 			bottom \your
 		<= Target_box $tw_color_box
+			bg_all <= bg_target
 			game <= mode
 			common \target
 			top \target
@@ -26,12 +33,15 @@ $tw_color $mol_page
 
 $tw_color_box $mol_view
 	game false
+	style *
+		^
+		background <= bg_all \
 	sub /
-		<= Common $mol_button_major
-			title <= common \
-		<= Center $mol_button_major
+		<= Common $mol_text
+			text <= common \
+		<= Center $mol_paragraph
 			title <= center \
-		<= Top $mol_button_major
+		<= Top $mol_paragraph
 			title <= top \
-		<= Bottom $mol_button_major
+		<= Bottom $mol_paragraph
 			title <= bottom \

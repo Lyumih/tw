@@ -12,13 +12,31 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * mode? false
+		 * mode? true
 		 * ```
 		 */
 		@ $mol_mem
 		mode(next?: any) {
 			if ( next !== undefined ) return next as never
-			return false
+			return true
+		}
+		
+		/**
+		 * ```tree
+		 * bg_from \green
+		 * ```
+		 */
+		bg_from() {
+			return "green"
+		}
+		
+		/**
+		 * ```tree
+		 * bg_target \orange
+		 * ```
+		 */
+		bg_target() {
+			return "orange"
 		}
 		
 		/**
@@ -76,6 +94,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * From_box $tw_color_box
+		 * 	bg_all <= bg_from
 		 * 	game <= mode
 		 * 	common \from
 		 * 	center \82% -
@@ -85,6 +104,7 @@ namespace $ {
 		From_box() {
 			const obj = new this.$.$tw_color_box()
 			
+			obj.bg_all = () => this.bg_from()
 			obj.game = () => this.mode()
 			obj.common = () => "from"
 			obj.center = () => "82% -"
@@ -96,7 +116,10 @@ namespace $ {
 		 * ```tree
 		 * Mix_box $tw_color_box
 		 * 	game <= mode
-		 * 	common \mix speed: 0.5 max: 2.4
+		 * 	common \
+		 * 		\mix
+		 * 		\speed: 0.5
+		 * 		\max: 2.4
 		 * 	top \need
 		 * 	bottom \your
 		 * ```
@@ -106,7 +129,7 @@ namespace $ {
 			const obj = new this.$.$tw_color_box()
 			
 			obj.game = () => this.mode()
-			obj.common = () => "mix speed: 0.5 max: 2.4"
+			obj.common = () => "mix\nspeed: 0.5\nmax: 2.4"
 			obj.top = () => "need"
 			obj.bottom = () => "your"
 			
@@ -116,6 +139,7 @@ namespace $ {
 		/**
 		 * ```tree
 		 * Target_box $tw_color_box
+		 * 	bg_all <= bg_target
 		 * 	game <= mode
 		 * 	common \target
 		 * 	top \target
@@ -126,6 +150,7 @@ namespace $ {
 		Target_box() {
 			const obj = new this.$.$tw_color_box()
 			
+			obj.bg_all = () => this.bg_target()
 			obj.game = () => this.mode()
 			obj.common = () => "target"
 			obj.top = () => "target"
@@ -176,6 +201,20 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * style *
+		 * 	^
+		 * 	background <= bg_all
+		 * ```
+		 */
+		style() {
+			return {
+				...super.style(),
+				background: this.bg_all()
+			} as Record< string, any >
+		}
+		
+		/**
+		 * ```tree
 		 * sub /
 		 * 	<= Common
 		 * 	<= Center
@@ -194,6 +233,15 @@ namespace $ {
 		
 		/**
 		 * ```tree
+		 * bg_all \
+		 * ```
+		 */
+		bg_all() {
+			return ""
+		}
+		
+		/**
+		 * ```tree
 		 * common \
 		 * ```
 		 */
@@ -203,14 +251,14 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Common $mol_button_major title <= common
+		 * Common $mol_text text <= common
 		 * ```
 		 */
 		@ $mol_mem
 		Common() {
-			const obj = new this.$.$mol_button_major()
+			const obj = new this.$.$mol_text()
 			
-			obj.title = () => this.common()
+			obj.text = () => this.common()
 			
 			return obj
 		}
@@ -226,12 +274,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Center $mol_button_major title <= center
+		 * Center $mol_paragraph title <= center
 		 * ```
 		 */
 		@ $mol_mem
 		Center() {
-			const obj = new this.$.$mol_button_major()
+			const obj = new this.$.$mol_paragraph()
 			
 			obj.title = () => this.center()
 			
@@ -249,12 +297,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Top $mol_button_major title <= top
+		 * Top $mol_paragraph title <= top
 		 * ```
 		 */
 		@ $mol_mem
 		Top() {
-			const obj = new this.$.$mol_button_major()
+			const obj = new this.$.$mol_paragraph()
 			
 			obj.title = () => this.top()
 			
@@ -272,12 +320,12 @@ namespace $ {
 		
 		/**
 		 * ```tree
-		 * Bottom $mol_button_major title <= bottom
+		 * Bottom $mol_paragraph title <= bottom
 		 * ```
 		 */
 		@ $mol_mem
 		Bottom() {
-			const obj = new this.$.$mol_button_major()
+			const obj = new this.$.$mol_paragraph()
 			
 			obj.title = () => this.bottom()
 			
