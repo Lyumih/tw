@@ -24,7 +24,7 @@ jobs:
       with:
         token: ${{ secrets.GH_PAT }}
         package: tw
-        modules: choo
+        modules: choo color
         
     - name: Consolidate apps
       run: |
