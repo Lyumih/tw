@@ -49,12 +49,60 @@ $mol_link $mol_view
 		^
 		click?event <=> click?event <=> event_click?event null
 
+$mol_speck $mol_view
+	attr *
+		^
+		mol_theme <= theme \$mol_theme_accent
+	style *
+		^
+		minHeight \1em
+	sub /
+		<= value null
+
+$mol_button $mol_view
+	enabled true
+	click?event null
+	event_click?event null
+	event *
+		^
+		click?event <=> event_activate?event null
+		dblclick?event <=> clicks?event null
+		keydown?event <=> event_key_press?event null 
+	attr *
+		^
+		disabled <= disabled false
+		role \button
+		tabindex <= tab_index 0
+		title <= hint_safe <= hint \
+	sub /$mol_view_content
+		<= title
+	Speck $mol_speck
+		value <= error \
+
+$mol_button_typed $mol_button
+	minimal_height 40
+	minimal_width 40
+
+$mol_button_major $mol_button_typed
+	attr *
+		^
+		mol_theme \$mol_theme_accent
+
 $tw_color $mol_page
+	mod \game|result
 	title \Игра в цвета от @artalar
 	body /
-		<= From $tw_box
-		<= Mix $tw_box
-		<= Target $tw_box
+		<= From_box $tw_box
+			common \from
+			center \82% -
+		<= Mix_box $tw_box
+			common \mix speed: 0.5 max: 2.4
+			top \need
+			bottom \your
+		<= Target_box $tw_box
+			common \target
+			top \need
+			bottom \your
 	foot /
 		<= GitHub $mol_link
 			uri \https://github.com/Lyumih/tw/tree/main/color
@@ -62,5 +110,16 @@ $tw_color $mol_page
 			uri \https://github.com/artalar/color-game-reatom
 
 $tw_box $mol_view
+	common \
+	center \
+	top \
+	bottom \
 	sub /
-		\from
+		<= Common $mol_button_major
+			title <= common
+		<= Center $mol_button_major
+			title <= center
+		<= Top $mol_button_major
+			title <= top
+		<= Bottom $mol_button_major
+			title <= bottom

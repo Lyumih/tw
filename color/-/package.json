@@ -118,7 +118,14 @@
     "$mol_link",
     "$mol_state_arg",
     "$mol_state",
-    "$mol_action"
+    "$mol_action",
+    "$mol_button_major",
+    "$mol_button",
+    "$mol_speck",
+    "$mol_layer",
+    "$mol_keyboard_code",
+    "$mol_keyboard",
+    "$mol_button_typed"
   ],
   "dependencies": {
     "jsdom": "*"
